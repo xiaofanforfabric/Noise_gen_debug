@@ -1,0 +1,39 @@
+{
+  "required": true,
+  "package": "org.cn.xiaofan.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "client": [
+    "CreateWorldScreenMixin",
+    "CreateWorldScreenCreateLevelMixin",
+    "DebugHudMixin",
+    "boundary.ChunkRendererRegionOverflowMixin"
+  ],
+  "mixins": [
+    "OctavePerlinNoiseSamplerMixin",
+    "NoiseChunkGeneratorAccessor",
+    "NoiseChunkGeneratorInvoker",
+    "ChunkGeneratorSettingsInvoker",
+    "PopulateNoiseSmoothingMixin",
+    "SampleHeightmapSmoothingMixin",
+    "noise.SampleNoiseLayerModeMixin",
+    "noise.DensityExtremeMixin",
+    "noise.SampleNoiseAxisFloatMixin",
+    "noise.NoiseOffsetMixin",
+    "noise.SkyGridMixin",
+    "noise.FringeCascadeMixin",
+    "boundary.ChunkRegionOutOfBoundMixin",
+    "border.MinecraftServerBorderMixin",
+    "border.WorldBorderMixin",
+    "border.WorldBorderSizeMixin",
+    "border.WorldBorderCommandMixin",
+    "border.ForceLoadCommandMixin",
+    "border.WorldBorderLoadMixin",
+    "border.EntityPositionMixin",
+    "border.WorldViewLightMixin",
+    "border.PlayerEntityPositionMixin",
+    "border.ServerPlayNetworkHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

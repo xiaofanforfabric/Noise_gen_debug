@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 xiaofanforandroid
+Copyright (c) 2026 xiaofanforfabric
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +19,20 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+## 例外 / Exceptions
+
+以下文件派生自 LGPL-3.0 的 FarLandsTraveler
+(https://github.com/SmallmanSeries/FarLandsTraveler)，
+因此**不适用上述 MIT 条款**，而是按 **LGPL-3.0-only** 发布：
+
+- src/main/java/org/cn/xiaofan/noise/FringeNoise.java
+- src/main/java/org/cn/xiaofan/noise/MathUtil.java
+- src/main/java/org/cn/xiaofan/noise/FringeCascade.java
+- src/main/java/org/cn/xiaofan/mixin/noise/SkyGridMixin.java
+- src/main/java/org/cn/xiaofan/mixin/noise/FringeCascadeMixin.java
+
+上述文件的开头均带有 SPDX-License-Identifier: LGPL-3.0-only 声明。
+详见 CREDITS.md。

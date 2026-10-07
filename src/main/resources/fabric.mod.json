@@ -1,0 +1,34 @@
+{
+        "schemaVersion": 1,
+        "id": "noise_gen_debug",
+        "version": "${version}",
+        "name": "noise_gen_debug",
+        "description": "地形噪声显微镜：把 1.16.5 的噪声管线逐层拆开，内置 9 个可插拔噪声生成器，用于实测边境之地的成因与形态。",
+        "authors": [
+                "xiaofanforfabric"
+        ],
+        "contact": {
+                "homepage": "https://github.com/xiaofanforfabric/Noise_gen_debug",
+                "sources": "https://github.com/xiaofanforfabric/Noise_gen_debug"
+        },
+        "license": "MIT",
+        "icon": "assets/noise_gen_debug/icon.png",
+        "environment": "*",
+        "entrypoints": {
+                "main": [
+                        "org.cn.xiaofan.Noise_gen_debug"
+                ],
+                "client": [
+                        "org.cn.xiaofan.client.NoiseGenDebugClient"
+                ]
+        },
+        "mixins": [
+                "noise_gen_debug.mixins.json"
+        ],
+        "depends": {
+                "fabricloader": ">=0.19.5",
+                "minecraft": "~1.16.5",
+                "java": ">=8",
+                "fabric": "*"
+        }
+}
