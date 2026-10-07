@@ -1,0 +1,78 @@
+# 推送 v* 标签时自动构建模组并发布 GitHub Release。
+#
+#   git tag v1.0.0
+#   git push origin v1.0.0
+#
+# 版本号从标签推导（去掉开头的 v），并传给 Gradle 覆盖 gradle.properties 里的 version，
+# 于是 fabric.mod.json 里的 ${version} 也会跟着变。
+#
+# ⚠️ JDK 必须 ≤ 23：本项目的 Gradle wrapper 是 8.12，跑不了 JDK 25。
+#    而 build.gradle 里 java toolchain 声明的是 17，所以这里用 17 最稳。
+
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+# softprops/action-gh-release 需要写权限才能创建 Release
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v6
+
+      - name: validate gradle wrapper
+        uses: gradle/actions/wrapper-validation@v6
+
+      - name: setup jdk
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: 'microsoft'
+
+      - name: derive mod version from tag
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "MOD_VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "标签 = ${GITHUB_REF_NAME}  →  模组版本 = ${VERSION}"
+
+      - name: make gradle wrapper executable
+        run: chmod +x ./gradlew
+
+      - name: build
+        run: ./gradlew build -Pversion="${MOD_VERSION}" --no-daemon --console=plain
+
+      - name: verify jar name matches tag
+        run: |
+          JAR="build/libs/noise_gen_debug-${MOD_VERSION}.jar"
+          if [ ! -f "$JAR" ]; then
+            echo "::error::找不到 $JAR —— 版本号可能没传进去"
+            ls -la build/libs
+            exit 1
+          fi
+          echo "✓ $JAR"
+
+      # 即使 Release 那一步失败，产物也能从 Actions 页面下载
+      - name: upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: noise_gen_debug-${{ env.MOD_VERSION }}
+          path: build/libs/*.jar
+
+      - name: publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          # 标签里含 "-" 视为预发布，例如 v1.1.0-beta.1
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          files: |
+            build/libs/noise_gen_debug-${{ env.MOD_VERSION }}.jar
+            build/libs/noise_gen_debug-${{ env.MOD_VERSION }}-sources.jar
